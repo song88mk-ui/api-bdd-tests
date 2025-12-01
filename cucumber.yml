@@ -1,0 +1,4 @@
+---
+default: --format pretty --require features --publish-quiet
+ci: --format pretty --format junit --require features --publish-quiet --out results/junit
+#--tags @platform
