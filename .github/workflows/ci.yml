@@ -19,6 +19,10 @@ jobs:
         with:
           ruby-version: '3.4'
           bundler-cache: true
+      - run: |
+          echo "Testing against: $TARGET"
+        env:
+          TARGET: ${{ env.PLATFORM_PUBLIC_API }}
       - run: bundle exec rake ci
         env:
           PLATFORM_API_INTERNAL_KEY: ${{ secrets.PLATFORM_API_INTERNAL_KEY }}
