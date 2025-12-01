@@ -1,17 +1,17 @@
 Before('@betting') do
-  ENV['HOST']  = "localhost:3000"
+  ENV['SERVICE_URL'] = ENV['PLATFORM_INTERNAL_BETTING_API'] || 'http://localhost:3003'
 end
 
 Before('@sportsbook') do
-  ENV['HOST']  = "localhost:3001"
+  ENV['SERVICE_URL'] = ENV['PLATFORM_INTERNAL_SPORTSBOOK_API'] || 'http://localhost:3002'
 end
 
 Before('@wallet') do
-  ENV['HOST']  = "localhost:3002"
+  ENV['SERVICE_URL'] = ENV['PLATFORM_INTERNAL_WALLET_API'] || 'http://localhost:3001'
 end
 
 Before('@platform') do
-  ENV['HOST']  = "localhost:3004"
+  ENV['SERVICE_URL'] = ENV['PLATFORM_INTERNAL_API'] || 'http://localhost:3000'
 end
 
 Before('@platformapi') do
@@ -19,5 +19,5 @@ Before('@platformapi') do
 end
 
 After do
-  ENV['HOST']  = ""
+  ENV['SERVICE_URL']  = ""
 end
