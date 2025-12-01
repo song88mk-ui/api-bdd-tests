@@ -64,7 +64,7 @@ Feature: Platform API
     Given I have internal api key
     When I send a GET request to "/v1/client/exchangerate" with the following:
       | currencyCode | EUR |
-    Then the response status should be "403"
+    Then the response status should be "200"
     Then show me the response
     And the JSON response should have "$.statusCode" with the text "100"
     And the JSON response should have "$.message" with the text "Success"
