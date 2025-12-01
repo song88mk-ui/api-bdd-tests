@@ -1,4 +1,4 @@
-@platform
+@platformapi
 Feature: Platform API
   As DevOps
   I want to make sure all the endpoints are working
