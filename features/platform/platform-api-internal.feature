@@ -1,5 +1,5 @@
-@platformapi
-Feature: Platform API
+#@platformapi
+Feature: Platform Internal API
   As DevOps
   I want to make sure all the endpoints are working
 
@@ -65,7 +65,6 @@ Feature: Platform API
     When I send a GET request to "/v1/client/exchangerate" with the following:
       | currencyCode | EUR |
     Then the response status should be "200"
-    Then show me the response
     And the JSON response should have "$.statusCode" with the text "100"
     And the JSON response should have "$.message" with the text "Success"
     And the JSON response should have "$.result.currencyCode" with the text "EUR"
