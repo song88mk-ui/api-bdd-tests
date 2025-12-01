@@ -21,7 +21,9 @@ namespace :cucumber do
         --require features
         --publish-quiet
         --out results/junit
-        --tags @oddsfeed-client-platform-api }
+        --tags @oddsfeed-client-platform-api
+        --tags @oddsfeed-client-api
+        }
   end
 
   task :default => :cucumber
