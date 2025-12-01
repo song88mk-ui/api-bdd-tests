@@ -1,12 +1,23 @@
 require 'rack/proxy'
 
 class Proxy < Rack::Proxy
-  def perform_request(env)
-    env['HTTP_HOST'] = ENV['HOST']
-    if !(ENV['HOST'] =~ /localhost/) # use https for non localhost
-      env['rack.url_scheme'] = 'https'
-      env['HTTPS'] = true
+
+  def rewrite_env(env)
+    if env['HTTP_HOST'] =~ /localhost/
+      return env
     end
+    backend = URI(ENV['SERVICE_URL'])
+    env['HTTP_HOST'] = backend.host
+    env['User-Agent'] = "webtau"
+    env['SERVER_NAME'] = backend.host
+    env['SERVER_PORT'] = backend.port
+    env['HTTP_X_FORWARDED_PROTO'] = backend.scheme
+    env['rack.url_scheme'] = backend.scheme
+    env['HTTPS'] = 'on' if backend.scheme == 'https'
+    env
+  end
+
+  def perform_request(env)
     super(env)
   end
 end

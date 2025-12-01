@@ -15,7 +15,7 @@ Before('@platform') do
 end
 
 Before('@platformapi') do
-  ENV['HOST'] = ENV['PLATFORM_PUBLIC_API']
+  ENV['SERVICE_URL'] = ENV['PLATFORM_PUBLIC_API']
 end
 
 After do
