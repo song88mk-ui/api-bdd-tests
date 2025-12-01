@@ -8,7 +8,7 @@ class Proxy < Rack::Proxy
       return env
     end
     env['HTTP_HOST'] = backend.host
-    env['User-Agent'] = "webtau"
+    env['User-Agent'] = "curl/8.5.0"
     env['SERVER_NAME'] = backend.host
     env['SERVER_PORT'] = backend.port
     env['HTTP_X_FORWARDED_PROTO'] = backend.scheme
