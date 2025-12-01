@@ -11,13 +11,13 @@ Feature: Platform Internal API
     And the JSON response should have "$.message" with the text "Missing Or Unsupported APIKey In Request Headers"
 
   Scenario: Authenticated Sportstree using Internal API Key
-    Given I have internal api key
+    Given I have platform internal api key
     When I send a GET request to "/v1/client/topfixtures/sportstree" with the following:
       | clientRefId | 0 |
     Then the response status should be "200"
 
   Scenario: Get Top Leagues
-    Given I have internal api key
+    Given I have platform internal api key
     When I send a GET request to "/v1/client/topleagues" with the following:
       | ClientIdRefs | 12600 |
       | SportId      | 0     |
@@ -29,7 +29,7 @@ Feature: Platform Internal API
     And the JSON response should have "$.message" with the text "Success"
 
   Scenario: Get Client Sports
-    Given I have internal api key
+    Given I have platform internal api key
     When I send a GET request to "/v1/client/sports" with the following:
       | LanguageCode | en |
     Then the response status should be "200"
@@ -38,7 +38,7 @@ Feature: Platform Internal API
 
 
   Scenario: Get Client All Leagues with non existing ClientId
-    Given I have internal api key
+    Given I have platform internal api key
     When I send a GET request to "/v1/client/allleagues" with the following:
       | ClientIdRef  | 0  |
       | SportId      | 0  |
@@ -49,7 +49,7 @@ Feature: Platform Internal API
 
 
   Scenario: Get Client All Leagues with existing ClientId
-    Given I have internal api key
+    Given I have platform internal api key
     When I send a GET request to "/v1/client/allleagues" with the following:
       | ClientIdRef  | 12600 |
       | SportId      | 0     |
@@ -61,7 +61,7 @@ Feature: Platform Internal API
 
 
   Scenario: Get Exchange Rate for EUR
-    Given I have internal api key
+    Given I have platform internal api key
     When I send a GET request to "/v1/client/exchangerate" with the following:
       | currencyCode | EUR |
     Then the response status should be "200"

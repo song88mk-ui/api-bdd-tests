@@ -5,7 +5,7 @@ Feature: Platform Integration API
 
 
   Scenario: Login
-    Given I have an API Key
+    Given I have platform API Key
     When I set headers:
       | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
     When I send and accept JSON
@@ -18,7 +18,7 @@ Feature: Platform Integration API
     Then the response status should be "200"
 
   Scenario: Logout
-    Given I have an API Key
+    Given I have platform API Key
     When I set headers:
       | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
       | x-operator-token | none |
@@ -26,9 +26,8 @@ Feature: Platform Integration API
     When I send a POST request to "/v1/authentication/logout"
     Then the response status should be "200"
 
-  @current
   Scenario: Get Balance with No Operator Token
-    Given I have an API Key
+    Given I have platform API Key
     When I set headers:
       | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
       | x-operator-token | unset |
