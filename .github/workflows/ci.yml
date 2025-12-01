@@ -26,7 +26,7 @@ jobs:
           echo "Platform API                 : $PLATFORM_PUBLIC_API"
           echo "OddsFeed Client API          : $ODDSFEED_CLIENT_API"
           echo "OddsFeed Client Platform API : $ODDSFEED_CLIENT_PLATFORM_API"
-      - run: bundle exec rake cucumber:ci
+      - run: bundle exec rake
         env:
           PLATFORM_API_INTERNAL_KEY: ${{ secrets.PLATFORM_API_INTERNAL_KEY }}
           PLATFORM_API_KEY: ${{ secrets.PLATFORM_API_KEY }}
