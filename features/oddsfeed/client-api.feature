@@ -1,3 +1,4 @@
+@oddsfeed
 @oddsfeed-client-api
 Feature: OddsFeed Client API
   As DevOps
@@ -15,3 +16,8 @@ Feature: OddsFeed Client API
     Then the response status should be "400"
     And the JSON response should have "$.statusCode" with the text "101"
     And the JSON response should have "$.message" with the text "Missing Or Unsupported APIKey In Request Headers"
+
+  # bet placement
+  # bet caencel
+  # odds recovery
+  # settlement recovery
