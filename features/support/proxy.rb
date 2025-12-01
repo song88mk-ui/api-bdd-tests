@@ -3,10 +3,10 @@ require 'rack/proxy'
 class Proxy < Rack::Proxy
 
   def rewrite_env(env)
-    if env['HTTP_HOST'] =~ /localhost/
+    backend = URI(ENV['SERVICE_URL'])
+    if backend.host =~ /localhost/
       return env
     end
-    backend = URI(ENV['SERVICE_URL'])
     env['HTTP_HOST'] = backend.host
     env['User-Agent'] = "webtau"
     env['SERVER_NAME'] = backend.host
