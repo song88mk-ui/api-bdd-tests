@@ -22,11 +22,11 @@ jobs:
       - run: |
           echo "Testing against: $TARGET"
         env:
-          TARGET: ${{ env.PLATFORM_PUBLIC_API }}
+          TARGET: ${{ vars.PLATFORM_PUBLIC_API }}
       - run: bundle exec rake ci
         env:
           PLATFORM_API_INTERNAL_KEY: ${{ secrets.PLATFORM_API_INTERNAL_KEY }}
-          PLATFORM_PUBLIC_API: ${{ env.PLATFORM_PUBLIC_API }}
+          PLATFORM_PUBLIC_API: ${{ vars.PLATFORM_PUBLIC_API }}
       - name: Publish Test Report
         uses: mikepenz/action-junit-report@v5
         if: success() || failure()
