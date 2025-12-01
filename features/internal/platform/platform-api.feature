@@ -1,4 +1,5 @@
-#@platformapi
+@internal
+@platformapi
 Feature: Platform Internal API
   As DevOps
   I want to make sure all the endpoints are working

@@ -1,3 +1,4 @@
+@external
 @oddsfeed
 @oddsfeed-client-api
 Feature: OddsFeed Client API

@@ -1,3 +1,4 @@
+@internal
 @sportsbook
 Feature: Betting API
   As DevOps

@@ -20,13 +20,13 @@ jobs:
           ruby-version: '3.4'
           bundler-cache: true
       - run: |
-          mv .env.dev .env
+          mv .env.external.dev .env
           source .env
           echo "Using the following targets:"
           echo "Platform API                 : $PLATFORM_PUBLIC_API"
           echo "OddsFeed Client API          : $ODDSFEED_CLIENT_API"
           echo "OddsFeed Client Platform API : $ODDSFEED_CLIENT_PLATFORM_API"
-      - run: bundle exec rake
+      - run: bundle exec rake external
         env:
           PLATFORM_API_INTERNAL_KEY: ${{ secrets.PLATFORM_API_INTERNAL_KEY }}
           PLATFORM_API_KEY: ${{ secrets.PLATFORM_API_KEY }}

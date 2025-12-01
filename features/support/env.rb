@@ -11,7 +11,7 @@ require 'dotenv/load'
 module RackProxyHelper
   def app
     Rack::Builder.new do
-      use Proxy
+      use Proxy, :backend => ENV['SERVICE_URL']
       run lambda { |env| [200, { 'Content-Type' => 'text/html' }, ['Hello from the proxy!']] }
     end
   end

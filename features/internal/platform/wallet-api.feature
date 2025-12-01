@@ -1,3 +1,4 @@
+@internal
 @wallet
 Feature: Wallet API
   As DevOps

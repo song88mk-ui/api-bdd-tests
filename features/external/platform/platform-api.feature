@@ -1,3 +1,4 @@
+@external
 @platformapi
 Feature: Platform Integration API
   As DevOps

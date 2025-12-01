@@ -1,3 +1,4 @@
+@internal
 @betting
 Feature: Betting API
   As DevOps
