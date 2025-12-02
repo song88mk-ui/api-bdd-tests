@@ -5,6 +5,10 @@ Cucumber::Rake::Task.new(:cucumber) do |t|
   t.profile = 'default'
 end
 
+task :clean do
+  sh "rm -fr results"
+end
+
 namespace :internal do
 
   desc "Run all features for Platform"

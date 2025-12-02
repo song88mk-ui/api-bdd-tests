@@ -1,4 +1,5 @@
 ---
 default: --format pretty --require features --publish-quiet
 ci: --format pretty --format junit --require features --publish-quiet --out results/junit
+cihtml: --format pretty --format html --require features --publish-quiet --out index.html
 current: --format pretty --color --require features --publish-quiet --tags @current

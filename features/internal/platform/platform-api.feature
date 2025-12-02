@@ -70,3 +70,14 @@ Feature: Platform Internal API
     And the JSON response should have "$.message" with the text "Success"
     And the JSON response should have "$.result.currencyCode" with the text "EUR"
     And the JSON response should have "$.result.exchangeRate" with the text "1.0"
+
+  Scenario: Get Client Status
+    Given I have platform internal api key
+    When I send and accept JSON
+    When I send a POST request to "/v1/client/status" with the following:
+    #Examples:
+      | ClientIdRef      | 12600 |
+      | IsActive         | 1     |
+    Then show me the response
+    Then the response status should be "400"
+    And the JSON response should have "$.statusCode" with the text "101"

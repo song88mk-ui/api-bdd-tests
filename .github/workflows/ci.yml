@@ -20,7 +20,7 @@ jobs:
           ruby-version: '3.4'
           bundler-cache: true
       - run: |
-          mv .env.external.dev .env
+          ln -nsf .env.external.dev .env
           source .env
           echo "Using the following targets:"
           echo "Platform API                 : $PLATFORM_PUBLIC_API"
