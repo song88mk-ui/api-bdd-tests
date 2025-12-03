@@ -26,11 +26,15 @@ jobs:
           echo "Platform API                 : $PLATFORM_PUBLIC_API"
           echo "OddsFeed Client API          : $ODDSFEED_CLIENT_API"
           echo "OddsFeed Client Platform API : $ODDSFEED_CLIENT_PLATFORM_API"
-      - run: bundle exec rake external
+      - name: OddsFeed
+        run: bundle exec rake external:oddsfeed
+        env:
+          ODDSFEED_API_KEY: ${{ secrets.ODDSFEED_API_KEY }}
+      - name: Platform API
+        run: bundle exec rake external:platformapi
         env:
           PLATFORM_API_INTERNAL_KEY: ${{ secrets.PLATFORM_API_INTERNAL_KEY }}
           PLATFORM_API_KEY: ${{ secrets.PLATFORM_API_KEY }}
-          ODDSFEED_API_KEY: ${{ secrets.ODDSFEED_API_KEY }}
       - name: Publish Test Report
         uses: mikepenz/action-junit-report@v5
         if: success() || failure()
