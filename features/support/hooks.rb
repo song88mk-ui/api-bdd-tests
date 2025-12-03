@@ -26,6 +26,10 @@ Before('@oddsfeed-client-platform-api') do
   ENV['SERVICE_URL'] = ENV['ODDSFEED_CLIENT_PLATFORM_API']
 end
 
+Before('@operator-api') do
+  ENV['SERVICE_URL'] = ENV['PLATFORM_OPERATOR_API']
+end
+
 After do
   ENV['SERVICE_URL']  = ""
 end
