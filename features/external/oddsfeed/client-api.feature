@@ -78,7 +78,6 @@ Feature: OddsFeed Client API
     Then the response status should be "400"
     And the JSON response should have "$.statusCode" with the text "102"
     And the JSON response should have "$.message" with the text "Missing Or Unsupported ClientId In Request Headers"
-    Then show me the response
 
   Scenario: Bet Placement - Valid but not offered
     Given I have oddsfeed API Key
@@ -114,11 +113,12 @@ Feature: OddsFeed Client API
     And the JSON response should have "$.statusCode" with the text "125"
     And the JSON response should have "$.message" with the text "Market Is Not Offered"
 
+  # bet is  missing
   Scenario: Bet Cancellation
     Given I have oddsfeed API Key
     When I set headers:
       | x-ip-address | 127.0.0.1 |
-      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
+      | X-Client-Id  | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
     When I send and accept JSON
     When I send a POST request to "/v1/bet/cancel" with the following:
     """
@@ -127,7 +127,9 @@ Feature: OddsFeed Client API
       "Reason": "For testing only"
     }
     """
-    Then show me the response
+    Then the response status should be "400"
+    And the JSON response should have "$.statusCode" with the text "1000"
+    And the JSON response should have "$.message" with the text "Error"
 
   Scenario: Odds Recovery
     Given I have oddsfeed API Key
