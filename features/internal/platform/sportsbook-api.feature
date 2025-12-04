@@ -102,3 +102,93 @@ Feature: Betting API
     Then the response status should be "200"
     And the JSON response should have "$.statusCode" with the text "100"
     And the JSON response should have "$.message" with the text "Success"
+
+  Scenario: Market Sort Order
+    When I send and accept JSON
+    And I send a POST request to "/v1/sportsbook/marketsortorder" with the following:
+    """
+    {
+      "ClientId": "F5251362-64F1-4BF4-28E9-08D8EE99CA8E"
+    }
+    """
+    Then the response status should be "200"
+    And the JSON response should have "$.message" with the text "Success"
+
+  # Must be due to translation
+  Scenario: Active Fixtures
+    When I send and accept JSON
+    When I send a POST request to "/v1/sportsbook/activefixtures" with the following:
+    """
+    {
+      "ClientId": "F5251362-64F1-4BF4-28E9-08D8EE99CA8E",
+      "ClientCode": "G01",
+      "LanguageCode": 1,
+      "IPCountryCode": "PH",
+      "ParticipantName": "unset",
+      "FixtureStatus": "live"
+    }
+    """
+    Then show me the response
+    Then the response status should be "200"
+
+  Scenario: Live Fixture Count
+    When I send and accept JSON
+    When I send a POST request to "/v2/sportsbook/livefixturecount" with the following:
+    """
+    {
+      "ClientId": "F5251362-64F1-4BF4-28E9-08D8EE99CA8E",
+      "SportId": 1,
+      "ClientCode": "G01",
+      "LanguageCode": 1,
+      "IPCountryCode": "PH"
+    }
+    """
+    Then the response status should be "200"
+    And the JSON response should have "$.message" with the text "Success"
+
+  Scenario: Today Fixture Count
+    When I send and accept JSON
+    When I send a POST request to "/v2/sportsbook/todayfixturecount" with the following:
+    """
+    {
+      "MinuteUTCOffset": 0,
+      "ClientId": "F5251362-64F1-4BF4-28E9-08D8EE99CA8E",
+      "LanguageCode": 1,
+      "ClientCode": "G01",
+      "SportGroupid": 0
+    }
+    """
+    Then the response status should be "200"
+    And the JSON response should have "$.message" with the text "Success"
+
+  Scenario: Daily Fixtures
+    When I send and accept JSON
+    When I send a POST request to "/v2/sportsbook/dailyfixtures" with the following:
+    """
+    {
+      "MinuteUTCOffset": 0,
+      "DateUTC": "2025-12-01",
+      "SportId": 1,
+      "ClientId": "F5251362-64F1-4BF4-28E9-08D8EE99CA8E",
+      "LanguageCode": 1,
+      "ClientCode": "G01",
+      "IpCountryCode": "PH"
+    }
+    """
+    Then the response status should be "200"
+    And the JSON response should have "$.message" with the text "Success"
+
+  Scenario: Bet Recommendations
+    When I send and accept JSON
+    When I send a POST request to "/v2/sportsbook/betrecommendations" with the following:
+    """
+    {
+      "ClientId": "F5251362-64F1-4BF4-28E9-08D8EE99CA8E",
+      "ClientCode": "G01",
+      "CurrencyCode": "EUR",
+      "LanguageCode": 1,
+      "Markets": []
+    }
+    """
+    Then the response status should be "200"
+    And the JSON response should have "$.message" with the text "Success"

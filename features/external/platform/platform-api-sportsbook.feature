@@ -5,6 +5,7 @@ Feature: Platform Integration API - Sportsbook
   As DevOps
   I want to make sure all the endpoints are working
 
+  @current
   Scenario: Obtain an Operator Token
     Given I have platform API Key
     When I set headers:
@@ -124,6 +125,7 @@ Feature: Platform Integration API - Sportsbook
     When I send a GET request to "/v2/sportsbook/topfixtures"
     Then the response status should be "200"
 
+  # translation issue
   Scenario: Active Fixtures
     Given I have platform API Key
     When I add the operator token
@@ -132,8 +134,9 @@ Feature: Platform Integration API - Sportsbook
     When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/activefixtures" with the following:
     """
-      ParticipantName=who&FixtureStatus=unset
-      """
+      participantName=unset&fixtureStatus=live
+    """
+    Then show me the response
     Then the response status should be "200"
 
   Scenario: Active Fixtures Details
@@ -151,13 +154,14 @@ Feature: Platform Integration API - Sportsbook
   Scenario: Live Fixture Count
     Given I have platform API Key
     When I set headers:
-      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
+      | X-Client-Id     | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
     When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/livefixturecount" with the following:
     """
-    SportGroupId=1
+    sportGroupId=1
     """
     Then the response status should be "200"
+    And the JSON response should have "$.message" with the text "Success"
 
   Scenario: Today Fixture Count
     Given I have platform API Key
@@ -166,9 +170,10 @@ Feature: Platform Integration API - Sportsbook
     When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/todayfixturecount" with the following:
     """
-    SportGroupId=1
+    sportGroupId=1
     """
     Then the response status should be "200"
+    And the JSON response should have "$.message" with the text "Success"
 
   Scenario: Get Live Fixtures
     Given I have platform API Key
@@ -236,6 +241,7 @@ Feature: Platform Integration API - Sportsbook
     """
     Then the response status should be "200"
 
+  #TODO: it sucks
   Scenario: Daily Fixtures
     Given I have platform API Key
     When I set headers:
@@ -243,9 +249,10 @@ Feature: Platform Integration API - Sportsbook
     When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/sports/dailyfixtures" with the following:
     """
-    sportId=1&dateUTC=2025-12-01&minuteUTCOffset=0
+    sportId=1&dateUTC=2025-12-04T00:00:00Z&minuteUTCOffset=-60
     """
-    Then the response status should be "200"
+    Then show me the response
+    Then the response status should be "400"
 
   # Most endpoints are True Wave Endpoints :P
 
@@ -262,15 +269,15 @@ Feature: Platform Integration API - Sportsbook
     And the JSON response should have "$.statusCode" with the text "105"
     And the JSON response should have "$.message" with the text "Unsupported CurrencyCode"
 
+  # failing wrong sb endpoint
   Scenario: Bet Recommendations
     Given I have platform API Key
     When I set headers:
       | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
     When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/betrecommendations" with the following:
-    """
-    currencyCode=EUR
-    """
+    #Examples:
+      | currencyCode | USDT |
     Then show me the response
     Then the response status should be "200"
 
@@ -284,18 +291,19 @@ Feature: Platform Integration API - Sportsbook
     And the JSON response should have "$.statusCode" with the text "100"
     And the JSON response should have "$.message" with the text "Success"
 
-  Scenario: CCF Customer Confidence Factor
+    @current
+  Scenario: CCF
     Given I have platform API Key
     When I set headers:
       | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
     When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/ccf" with the following:
-    """
-      UserId=3546c6d2-a83b-47c5-8a37-c1e2111543b5
-    """
+    #Examples:
+      | userId | 3546c6d2-a83b-47c5-8a37-c1e2111543b5 |
     Then show me the response
     Then the response status should be "200"
 
+    @current
   Scenario: Logout the Operator Token
     Given I have platform API Key
     When I add the operator token
