@@ -107,4 +107,3 @@ Feature: Platform Integration API - Betting
     """
     Then show me the response
     Then the response status should be "200"
-

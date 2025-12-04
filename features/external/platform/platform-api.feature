@@ -28,4 +28,3 @@ Feature: Platform Integration API
     When I send a POST request to "/v1/authentication/logout"
     Then show me the response
     Then the response status should be "200"
-

@@ -46,4 +46,3 @@ Feature: Betting API - Config Client
     Then the response status should be "200"
     And the JSON response should have "$.statusCode" with the text "100"
     And the JSON response should have "$.message" with the text "Success"
-
