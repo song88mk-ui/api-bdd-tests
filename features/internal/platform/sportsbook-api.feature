@@ -131,6 +131,22 @@ Feature: Betting API
     Then show me the response
     Then the response status should be "200"
 
+  @current
+  Scenario: Active Fixture Details
+    When I send and accept JSON
+    When I send a POST request to "/v2/sportsbook/fixtures/details/limited" with the following:
+    """
+    {
+      "FixtureId": "1437404267307610112",
+      "ClientId": "F5251362-64F1-4BF4-28E9-08D8EE99CA8E",
+      "ClientCode": "G01",
+      "LanguageCode": 1,
+      "IPCountryCode": "PH"
+    }
+    """
+    Then show me the response
+    Then the response status should be "200"
+
   Scenario: Live Fixture Count
     When I send and accept JSON
     When I send a POST request to "/v2/sportsbook/livefixturecount" with the following:

@@ -139,6 +139,7 @@ Feature: Platform Integration API - Sportsbook
     Then show me the response
     Then the response status should be "200"
 
+  @current
   Scenario: Active Fixtures Details
     Given I have platform API Key
     When I add the operator token
@@ -147,7 +148,7 @@ Feature: Platform Integration API - Sportsbook
     When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/activefixtures/details" with the following:
     """
-      FixtureId=fixtureId
+      fixtureId=1437404267307610112
     """
     Then the response status should be "200"
 
@@ -291,7 +292,6 @@ Feature: Platform Integration API - Sportsbook
     And the JSON response should have "$.statusCode" with the text "100"
     And the JSON response should have "$.message" with the text "Success"
 
-    @current
   Scenario: CCF
     Given I have platform API Key
     When I set headers:
