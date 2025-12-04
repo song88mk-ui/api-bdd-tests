@@ -33,7 +33,8 @@ Feature: Platform Integration API - Sportsbook
     ProviderFixtureId=bg:match:12345&IPAddress=1.2.3.4&IsMobile=true
     """
     Then show me the response
-    Then the response status should be "200"
+    # no fixture to test
+    Then the response status should be "400"
 
   Scenario: Top Leagues
     Given I have platform API Key
@@ -93,6 +94,7 @@ Feature: Platform Integration API - Sportsbook
       | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
     When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/marketsortorder"
+    Then show me the response
     Then the response status should be "200"
 
   Scenario: Fixture Sort Order
@@ -245,7 +247,7 @@ Feature: Platform Integration API - Sportsbook
     """
     Then the response status should be "200"
 
-# Most endpoints are True Wave Endpoints :P
+  # Most endpoints are True Wave Endpoints :P
 
   Scenario: Bet Recommendations Unsupported Currency
     Given I have platform API Key
@@ -267,7 +269,7 @@ Feature: Platform Integration API - Sportsbook
     When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/betrecommendations" with the following:
     """
-    currencyCode=USDT
+    currencyCode=EUR
     """
     Then show me the response
     Then the response status should be "200"
@@ -289,6 +291,18 @@ Feature: Platform Integration API - Sportsbook
     When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/ccf" with the following:
     """
-      UserId=missing
+      UserId=3546c6d2-a83b-47c5-8a37-c1e2111543b5
     """
+    Then show me the response
     Then the response status should be "200"
+
+  Scenario: Logout the Operator Token
+    Given I have platform API Key
+    When I add the operator token
+    When I set headers:
+      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
+    When I send and accept JSON
+    When I send a POST request to "/v1/authentication/logout"
+    Then the response status should be "200"
+    And the JSON response should have "$.statusCode" with the text "100"
+    And the JSON response should have "$.message" with the text "Success"

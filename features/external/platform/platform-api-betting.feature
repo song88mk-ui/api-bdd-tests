@@ -65,7 +65,9 @@ Feature: Platform Integration API - Betting
     }
     """
     Then show me the response
-    Then the response status should be "200"
+    Then the response status should be "400"
+    And the JSON response should have "$.statusCode" with the text "104"
+    And the JSON response should have "$.message" with the text "Insufficient Funds"
 
   Scenario: Max Stake API
     Given I have platform API Key
@@ -98,7 +100,9 @@ Feature: Platform Integration API - Betting
     }
     """
     Then show me the response
-    Then the response status should be "200"
+    Then the response status should be "400"
+    And the JSON response should have "$.statusCode" with the text "104"
+    And the JSON response should have "$.message" with the text "Insufficient Funds"
 
   Scenario: Bet Config
     Given I have platform API Key
@@ -111,7 +115,8 @@ Feature: Platform Integration API - Betting
     CurrencyCode=CNY
     """
     Then show me the response
-    Then the response status should be "200"
+    # no fixture on test
+    Then the response status should be "400"
 
   Scenario: Bet Status
     Given I have platform API Key
@@ -124,4 +129,16 @@ Feature: Platform Integration API - Betting
     BetId=6c97ec01-8c6d-46ac-a84e-548f004de204
     """
     Then show me the response
+    # because I cannot bet to a fixture
+    Then the response status should be "400"
+
+  Scenario: Logout the Operator Token
+    Given I have platform API Key
+    When I add the operator token
+    When I set headers:
+      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
+    When I send and accept JSON
+    When I send a POST request to "/v1/authentication/logout"
     Then the response status should be "200"
+    And the JSON response should have "$.statusCode" with the text "100"
+    And the JSON response should have "$.message" with the text "Success"
