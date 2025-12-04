@@ -30,6 +30,10 @@ Before('@operator-api') do
   ENV['SERVICE_URL'] = ENV['PLATFORM_OPERATOR_API']
 end
 
+Before('@auth-api') do
+  ENV['SERVICE_URL'] = ENV['PLATFORM_AUTH_API']
+end
+
 After do
   ENV['SERVICE_URL']  = ""
 end
