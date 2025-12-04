@@ -11,24 +11,31 @@ Feature: Platform Internal API
     And the JSON response should have "$.statusCode" with the text "101"
     And the JSON response should have "$.message" with the text "Missing Or Unsupported APIKey In Request Headers"
 
+  @failing
   Scenario: Authenticated Sportstree using Internal API Key
     Given I have platform internal api key
     When I send a GET request to "/v1/client/topfixtures/sportstree" with the following:
-      | clientRefId | 0 |
+    """
+    clientRefId=12800
+    """
+    Then show me the response
     Then the response status should be "200"
 
+  @failing
+  @current
   Scenario: Get Top Leagues
     Given I have platform internal api key
+    When I set to use test client id
     When I send a GET request to "/v1/client/topleagues" with the following:
-      | ClientIdRefs | 12600 |
-      | SportId      | 0     |
-      | LanguageCode | EN    |
-      | SegmentId    | 0     |
-      | LeagueId     | 0     |
+    """
+    sportId=0&FixtureStatusGroup=1&MinuteUTCOffset=300
+    """
+    Then show me the response
     Then the response status should be "200"
     And the JSON response should have "$.statusCode" with the text "100"
     And the JSON response should have "$.message" with the text "Success"
 
+  @failing
   Scenario: Get Client Sports
     Given I have platform internal api key
     When I send a GET request to "/v1/client/sports" with the following:
@@ -38,6 +45,7 @@ Feature: Platform Internal API
     And the JSON response should have "$.message" with the text "Success"
 
 
+  @failing
   Scenario: Get Client All Leagues with non existing ClientId
     Given I have platform internal api key
     When I send a GET request to "/v1/client/allleagues" with the following:
@@ -61,6 +69,7 @@ Feature: Platform Internal API
     And the JSON response should have "$.message" with the text "Success"
 
 
+  @failing
   Scenario: Get Exchange Rate for EUR
     Given I have platform internal api key
     When I send a GET request to "/v1/client/exchangerate" with the following:
@@ -71,6 +80,7 @@ Feature: Platform Internal API
     And the JSON response should have "$.result.currencyCode" with the text "EUR"
     And the JSON response should have "$.result.exchangeRate" with the text "1.0"
 
+  @failing
   Scenario: Get Client Status
     Given I have platform internal api key
     When I send and accept JSON

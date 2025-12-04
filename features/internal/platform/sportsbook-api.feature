@@ -114,7 +114,7 @@ Feature: Betting API
     Then the response status should be "200"
     And the JSON response should have "$.message" with the text "Success"
 
-  # Must be due to translation
+  @failing
   Scenario: Active Fixtures
     When I send and accept JSON
     When I send a POST request to "/v1/sportsbook/activefixtures" with the following:
@@ -131,7 +131,7 @@ Feature: Betting API
     Then show me the response
     Then the response status should be "200"
 
-  @current
+  @failing
   Scenario: Active Fixture Details
     When I send and accept JSON
     When I send a POST request to "/v2/sportsbook/fixtures/details/limited" with the following:
@@ -207,4 +207,52 @@ Feature: Betting API
     }
     """
     Then the response status should be "200"
+    And the JSON response should have "$.message" with the text "Success"
+
+
+  @current
+  @failing
+  Scenario: Get Sports (all)
+    When I send and accept JSON
+    When I send a POST request to "/v2/sportsbook/sports" with the following:
+    """
+    {
+      "ClientId": "F5251362-64F1-4BF4-28E9-08D8EE99CA8E",
+      "LanguageCode": 1,
+      "ClientCode": "G01",
+      "SportGroup": 0,
+      "MinuteUTCOffset": 300
+    }
+    """
+    Then show me the response
+    Then the response status should be "200"
+    And the JSON response should have "$.message" with the text "Success"
+
+  Scenario: Boosted Fixtures
+    When I send and accept JSON
+    When I send a POST request to "/v1/sportsbook/boostedfixtures" with the following:
+    """
+    {
+      "ClientId": "F5251362-64F1-4BF4-28E9-08D8EE99CA8E",
+      "ClientCode": "G01",
+      "LanguageCode": 1,
+      "IpCountryCode": "CN"
+    }
+    """
+    Then show me the response
+    Then the response status should be "200"
+    And the JSON response should have "$.statusCode" with the text "100"
+    And the JSON response should have "$.message" with the text "Success"
+
+  Scenario: Get Translations By Language Code
+    When I send and accept JSON
+    When I send a POST request to "/v1/sportsbook/translations" with the following:
+    """
+    {
+      "LanguageCode": 1
+    }
+    """
+    Then show me the response
+    Then the response status should be "200"
+    And the JSON response should have "$.statusCode" with the text "100"
     And the JSON response should have "$.message" with the text "Success"

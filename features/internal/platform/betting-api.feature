@@ -220,6 +220,7 @@ Feature: Betting API - Betting
     """
     Then the response status should be "200"
 
+  @current
   Scenario: Bet Recommendation
     When I send and accept JSON
     And I send a POST request to "/v1/bet/recommendations" with the following:
@@ -227,7 +228,7 @@ Feature: Betting API - Betting
     {
       "ClientId": "F5251362-64F1-4BF4-28E9-08D8EE99CA8E",
       "ClientCode": "G01",
-      "CurrencyCode": "USDT",
+      "CurrencyCode": "EUR",
       "LanguageCode": 1
     }
     """

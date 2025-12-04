@@ -5,6 +5,7 @@ Feature: Platform Integration API - Betting
   As DevOps
   I want to make sure all the endpoints are working
 
+  @current
   Scenario: Obtain an Operator Token
     Given I have platform API Key
     When I set headers:
@@ -112,7 +113,7 @@ Feature: Platform Integration API - Betting
     When I send and accept JSON
     When I send a GET request to "/v1/bet/config" with the following:
     """
-    CurrencyCode=CNY
+    currencyCode=1
     """
     Then show me the response
     # no fixture on test
@@ -132,11 +133,38 @@ Feature: Platform Integration API - Betting
     # because I cannot bet to a fixture
     Then the response status should be "400"
 
-  Scenario: Logout the Operator Token
+  Scenario: Bet Recommendations Unsupported Currency
+    Given I have platform API Key
+    When I set headers:
+      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
+    When I send and accept JSON
+    When I send a GET request to "/v1/sportsbook/betrecommendations" with the following:
+    """
+    currencyCode=ZZZ
+    """
+    Then the response status should be "400"
+    And the JSON response should have "$.statusCode" with the text "105"
+    And the JSON response should have "$.message" with the text "Unsupported CurrencyCode"
+
+  @failing
+  Scenario: Bet Recommendations
     Given I have platform API Key
     When I add the operator token
     When I set headers:
       | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
+    When I send and accept JSON
+    When I send a GET request to "/v1/sportsbook/betrecommendations" with the following:
+    """
+    currencyCode=EUR
+    """
+    Then show me the response
+    Then the response status should be "200"
+
+  @current
+  Scenario: Logout the Operator Token
+    Given I have platform API Key
+    When I add the operator token
+    When I set use the test client id
     When I send and accept JSON
     When I send a POST request to "/v1/authentication/logout"
     Then the response status should be "200"

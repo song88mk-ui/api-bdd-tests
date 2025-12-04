@@ -45,7 +45,7 @@ Feature: Platform Integration API - Sportsbook
     When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/sports/topleagues" with the following:
     """
-    SportId=1&FixtureStatusGroup=1&MinuteUTCOffset=0
+    sportId=0&fixtureStatusGroup=1&minuteUTCOffset=0
     """
     Then the response status should be "200"
 
@@ -79,6 +79,7 @@ Feature: Platform Integration API - Sportsbook
     When I send a GET request to "/v1/sportsbook/markettemplategroups"
     Then the response status should be "200"
 
+    @current
   Scenario: Selector Market Template
     Given I have platform API Key
     When I add the operator token
@@ -139,7 +140,6 @@ Feature: Platform Integration API - Sportsbook
     Then show me the response
     Then the response status should be "200"
 
-  @current
   Scenario: Active Fixtures Details
     Given I have platform API Key
     When I add the operator token
@@ -175,6 +175,19 @@ Feature: Platform Integration API - Sportsbook
     """
     Then the response status should be "200"
     And the JSON response should have "$.message" with the text "Success"
+
+  @current
+  Scenario: Get Sports
+    Given I have platform API Key
+    When I set headers:
+      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
+    When I send and accept JSON
+    When I send a GET request to "/v1/sportsbook/sports" with the following:
+    """
+    sportGroup=0&minuteUTCOffset=400
+    """
+    Then show me the response
+    Then the response status should be "200"
 
   Scenario: Get Live Fixtures
     Given I have platform API Key
@@ -256,32 +269,6 @@ Feature: Platform Integration API - Sportsbook
     Then the response status should be "400"
 
   # Most endpoints are True Wave Endpoints :P
-
-  Scenario: Bet Recommendations Unsupported Currency
-    Given I have platform API Key
-    When I set headers:
-      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-    When I send and accept JSON
-    When I send a GET request to "/v1/sportsbook/betrecommendations" with the following:
-    """
-    currencyCode=ZZZ
-    """
-    Then the response status should be "400"
-    And the JSON response should have "$.statusCode" with the text "105"
-    And the JSON response should have "$.message" with the text "Unsupported CurrencyCode"
-
-  # failing wrong sb endpoint
-  Scenario: Bet Recommendations
-    Given I have platform API Key
-    When I set headers:
-      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-    When I send and accept JSON
-    When I send a GET request to "/v1/sportsbook/betrecommendations" with the following:
-    #Examples:
-      | currencyCode | USDT |
-    Then show me the response
-    Then the response status should be "200"
-
   Scenario: Announcements
     Given I have platform API Key
     When I set headers:
@@ -303,7 +290,27 @@ Feature: Platform Integration API - Sportsbook
     Then show me the response
     Then the response status should be "200"
 
-    @current
+  Scenario: Boosted Odds
+    Given I have platform API Key
+    When I set headers:
+      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
+    When I send and accept JSON
+    When I send a GET request to "/v1/sportsbook/boostedfixtures"
+    Then the response status should be "200"
+    And the JSON response should have "$.statusCode" with the text "100"
+    And the JSON response should have "$.message" with the text "Success"
+
+  Scenario: Translations
+    Given I have platform API Key
+    When I set headers:
+      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
+    When I send and accept JSON
+    When I send a GET request to "/v1/sportsbook/translations"
+    Then the response status should be "200"
+    And the JSON response should have "$.statusCode" with the text "100"
+    And the JSON response should have "$.message" with the text "Success"
+
+  @current
   Scenario: Logout the Operator Token
     Given I have platform API Key
     When I add the operator token
