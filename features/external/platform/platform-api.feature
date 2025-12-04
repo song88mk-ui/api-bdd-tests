@@ -13,18 +13,21 @@ Feature: Platform Integration API
     """
       {
         "UserName" : "test",
-        "Password" : "secret"
+        "Password" : "test"
       }
     """
-    Then show me the response
+    Then I will have an operator token
     Then the response status should be "200"
+    And the JSON response should have "$.statusCode" with the text "100"
+    And the JSON response should have "$.message" with the text "Success"
 
   Scenario: Logout
     Given I have platform API Key
+    When I add the operator token
     When I set headers:
       | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-      | x-operator-token | none |
     When I send and accept JSON
     When I send a POST request to "/v1/authentication/logout"
-    Then show me the response
     Then the response status should be "200"
+    And the JSON response should have "$.statusCode" with the text "100"
+    And the JSON response should have "$.message" with the text "Success"

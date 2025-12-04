@@ -5,11 +5,28 @@ Feature: Platform Integration API - Sportsbook
   As DevOps
   I want to make sure all the endpoints are working
 
-  Scenario: Livestream
+  Scenario: Obtain an Operator Token
     Given I have platform API Key
     When I set headers:
       | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-      | x-operator-token | none |
+    When I send and accept JSON
+    When I send a POST request to "/v1/authentication/login" with the following:
+    """
+      {
+        "UserName" : "test",
+        "Password" : "test"
+      }
+    """
+    Then I will have an operator token
+    Then the response status should be "200"
+    And the JSON response should have "$.statusCode" with the text "100"
+    And the JSON response should have "$.message" with the text "Success"
+
+  Scenario: Livestream
+    Given I have platform API Key
+    When I add the operator token
+    When I set headers:
+      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
     When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/livestream" with the following:
     """
@@ -20,9 +37,9 @@ Feature: Platform Integration API - Sportsbook
 
   Scenario: Top Leagues
     Given I have platform API Key
+    When I add the operator token
     When I set headers:
       | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-      | x-operator-token | none |
     When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/sports/topleagues" with the following:
     """
@@ -32,9 +49,9 @@ Feature: Platform Integration API - Sportsbook
 
   Scenario: All Leagues
     Given I have platform API Key
+    When I add the operator token
     When I set headers:
       | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-      | x-operator-token | none |
     When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/sports/allleagues" with the following:
     """
@@ -44,72 +61,72 @@ Feature: Platform Integration API - Sportsbook
 
   Scenario: Top Fixtures FixtureId
     Given I have platform API Key
+    When I add the operator token
     When I set headers:
       | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-      | x-operator-token | none |
     When I send and accept JSON
     When I send a GET request to "/v2/sportsbook/topfixtures/fixtureId"
     Then the response status should be "200"
 
   Scenario: Market Template Groups
     Given I have platform API Key
+    When I add the operator token
     When I set headers:
       | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-      | x-operator-token | none |
     When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/markettemplategroups"
     Then the response status should be "200"
 
   Scenario: Selector Market Template
     Given I have platform API Key
+    When I add the operator token
     When I set headers:
       | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-      | x-operator-token | none |
     When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/selectormarkettemplates"
     Then the response status should be "200"
 
   Scenario: Market Sort Order
     Given I have platform API Key
+    When I add the operator token
     When I set headers:
       | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-      | x-operator-token | none |
     When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/marketsortorder"
     Then the response status should be "200"
 
   Scenario: Fixture Sort Order
     Given I have platform API Key
+    When I add the operator token
     When I set headers:
       | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-      | x-operator-token | none |
     When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/fixturesortorder"
     Then the response status should be "200"
 
   Scenario: User Favorites
     Given I have platform API Key
+    When I add the operator token
     When I set headers:
       | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-      | x-operator-token | none |
     When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/userfavorites/fixtures"
     Then the response status should be "200"
 
   Scenario: Top Fixtures
     Given I have platform API Key
+    When I add the operator token
     When I set headers:
       | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-      | x-operator-token | none |
     When I send and accept JSON
     When I send a GET request to "/v2/sportsbook/topfixtures"
     Then the response status should be "200"
 
   Scenario: Active Fixtures
     Given I have platform API Key
+    When I add the operator token
     When I set headers:
       | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-      | x-operator-token | none |
     When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/activefixtures" with the following:
     """
@@ -119,9 +136,9 @@ Feature: Platform Integration API - Sportsbook
 
   Scenario: Active Fixtures Details
     Given I have platform API Key
+    When I add the operator token
     When I set headers:
       | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-      | x-operator-token | none |
     When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/activefixtures/details" with the following:
     """

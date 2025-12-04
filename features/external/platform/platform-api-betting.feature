@@ -5,22 +5,40 @@ Feature: Platform Integration API - Betting
   As DevOps
   I want to make sure all the endpoints are working
 
-  Scenario: Get Balance
+  Scenario: Obtain an Operator Token
     Given I have platform API Key
     When I set headers:
       | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-      | x-operator-token | unset |
+    When I send and accept JSON
+    When I send a POST request to "/v1/authentication/login" with the following:
+    """
+      {
+        "UserName" : "test",
+        "Password" : "test"
+      }
+    """
+    Then I will have an operator token
+    Then the response status should be "200"
+    And the JSON response should have "$.statusCode" with the text "100"
+    And the JSON response should have "$.message" with the text "Success"
+
+  Scenario: Get Balance
+    Given I have platform API Key
+    When I add the operator token
+    When I set headers:
+      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
     When I send and accept JSON
     When I send a GET request to "/v1/wallet/balance"
     Then show me the response
     Then the response status should be "200"
-    And the JSON response should have "$.statusCode" with the text "101"
+    And the JSON response should have "$.statusCode" with the text "100"
+    And the JSON response should have "$.message" with the text "Success"
 
   Scenario: Bet Placement
     Given I have platform API Key
+    When I add the operator token
     When I set headers:
       | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-      | x-operator-token | none |
     When I send and accept JSON
     When I send a POST request to "/v2/bet/placement" with the following:
     """
@@ -46,14 +64,14 @@ Feature: Platform Integration API - Betting
       ]
     }
     """
-    Then the response status should be "200"
     Then show me the response
+    Then the response status should be "200"
 
   Scenario: Max Stake API
     Given I have platform API Key
+    When I add the operator token
     When I set headers:
       | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-      | x-operator-token | none |
     When I send and accept JSON
     When I send a POST request to "/v2/bet/placement" with the following:
     """
@@ -84,9 +102,9 @@ Feature: Platform Integration API - Betting
 
   Scenario: Bet Config
     Given I have platform API Key
+    When I add the operator token
     When I set headers:
       | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-      | x-operator-token | none |
     When I send and accept JSON
     When I send a GET request to "/v1/bet/config" with the following:
     """
@@ -97,9 +115,9 @@ Feature: Platform Integration API - Betting
 
   Scenario: Bet Status
     Given I have platform API Key
+    When I add the operator token
     When I set headers:
       | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-      | x-operator-token | none |
     When I send and accept JSON
     When I send a GET request to "/v1/bet/status" with the following:
     """
