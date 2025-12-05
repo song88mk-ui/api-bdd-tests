@@ -164,7 +164,7 @@ Feature: Platform Integration API - Betting
   Scenario: Logout the Operator Token
     Given I have platform API Key
     When I add the operator token
-    When I set use the test client id
+    When I use the test client id
     When I send and accept JSON
     When I send a POST request to "/v1/authentication/logout"
     Then the response status should be "200"

@@ -16,7 +16,7 @@ Given('I have auth API Key') do
   header 'x-api-key', ENV['AUTH_API_KEY']
 end
 
-When('I set to use test client id') do
+When('I use the test client id') do
   xci = ENV['TEST_CLIENT_ID']
   if xci == ""
     puts "No Test Client ID setup on the environment"

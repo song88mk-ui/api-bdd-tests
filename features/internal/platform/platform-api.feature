@@ -25,7 +25,7 @@ Feature: Platform Internal API
   @current
   Scenario: Get Top Leagues
     Given I have platform internal api key
-    When I set to use test client id
+    When I use the test client id
     When I send a GET request to "/v1/client/topleagues" with the following:
     """
     sportId=0&FixtureStatusGroup=1&MinuteUTCOffset=300
