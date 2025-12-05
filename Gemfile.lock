@@ -50,6 +50,17 @@ GEM
     diff-lcs (1.6.2)
     dotenv (3.1.8)
     drb (2.2.3)
+    faraday (2.14.0)
+      faraday-net_http (>= 2.0, < 3.5)
+      json
+      logger
+    faraday-mashify (1.0.1)
+      faraday (~> 2.0)
+      hashie
+    faraday-multipart (1.1.1)
+      multipart-post (~> 2.0)
+    faraday-net_http (3.4.2)
+      net-http (~> 0.5)
     ffi (1.17.2-aarch64-linux-gnu)
     ffi (1.17.2-aarch64-linux-musl)
     ffi (1.17.2-arm-linux-gnu)
@@ -60,6 +71,9 @@ GEM
     ffi (1.17.2-x86_64-darwin)
     ffi (1.17.2-x86_64-linux-gnu)
     ffi (1.17.2-x86_64-linux-musl)
+    gli (2.22.2)
+      ostruct
+    hashie (5.0.0)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
     json (2.16.0)
@@ -72,6 +86,9 @@ GEM
     minitest (5.26.2)
     multi_json (1.17.0)
     multi_test (1.1.0)
+    multipart-post (2.4.1)
+    net-http (0.8.0)
+      uri (>= 0.11.1)
     nokogiri (1.18.10)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
@@ -91,6 +108,7 @@ GEM
       racc (~> 1.4)
     nokogiri (1.18.10-x86_64-linux-musl)
       racc (~> 1.4)
+    ostruct (0.6.3)
     racc (1.8.1)
     rack (3.2.4)
     rack-proxy (0.7.7)
@@ -112,6 +130,13 @@ GEM
       rspec-support (~> 3.13.0)
     rspec-support (3.13.6)
     securerandom (0.4.1)
+    slack-ruby-client (3.1.0)
+      faraday (>= 2.0.1)
+      faraday-mashify
+      faraday-multipart
+      gli
+      hashie
+      logger
     sys-uname (1.4.1)
       ffi (~> 1.1)
       memoist3 (~> 1.0.0)
@@ -144,6 +169,7 @@ DEPENDENCIES
   rack-test
   rake
   rspec
+  slack-ruby-client
 
 BUNDLED WITH
    2.7.2

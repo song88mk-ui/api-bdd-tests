@@ -175,8 +175,22 @@ Feature: Platform Integration API - Sportsbook
     And the JSON response should have "$.statusCode" with the text "100"
     And the JSON response should have "$.message" with the text "Success"
 
-  # translation issue
-  Scenario: Active Fixtures
+  Scenario: Active Fixtures - No Parameters
+    Given I have platform API Key
+    When I add the operator token
+    When I set headers:
+      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
+    When I send and accept JSON
+    When I send a GET request to "/v1/sportsbook/activefixtures"
+    Then the response status should be "200"
+    And the JSON response should have "$.statusCode" with the text "100"
+    And the JSON response should have "$.message" with the text "Success"
+
+  @known
+  @todo
+  # grab one record from above results (no parameters) and search it
+  # as participant name
+  Scenario: Active Fixtures - Prematch
     Given I have platform API Key
     When I add the operator token
     When I set headers:
@@ -184,13 +198,14 @@ Feature: Platform Integration API - Sportsbook
     When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/activefixtures" with the following:
     #Examples
-      | participantName | devops |
-      | fixtureStatus   | live   |
-    Then show me the response
+      | participantName | Moca FC |
+      | fixtureStatus   | prematch |
     Then the response status should be "200"
     And the JSON response should have "$.statusCode" with the text "100"
     And the JSON response should have "$.message" with the text "Success"
 
+  @known
+  @todo
   Scenario: Active Fixtures Details
     Given I have platform API Key
     When I add the operator token
@@ -201,7 +216,6 @@ Feature: Platform Integration API - Sportsbook
     #Examples
       | fixtureId | 1437404267307610112 |
     Then the response status should be "200"
-    Then show me the response
 
   Scenario: Live Fixture Count
     Given I have platform API Key
@@ -227,20 +241,19 @@ Feature: Platform Integration API - Sportsbook
     And the JSON response should have "$.statusCode" with the text "100"
     And the JSON response should have "$.message" with the text "Success"
 
-  @failing
-  Scenario: Get Sports
+  Scenario: Get Sports - (No Fixture Scope / Today )
     Given I have platform API Key
     When I set headers:
       | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
     When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/sports" with the following:
     #Examples
-      | sportGroup      | 0   |
-      | minuteUTCOffset | 300 |
-    Then show me the response
+      | sportGroup      | 1 |
+      | minuteUTCOffset | 0 |
     Then the response status should be "200"
+    And the JSON response should have "$.statusCode" with the text "100"
+    And the JSON response should have "$.message" with the text "Success"
 
-    @current
   Scenario: Get Live Fixtures
     Given I have platform API Key
     When I set headers:
@@ -394,6 +407,7 @@ Feature: Platform Integration API - Sportsbook
 
   @failing
   @current
+  @known
   Scenario: Bet Recommendations
     Given I have platform API Key
     When I add the operator token

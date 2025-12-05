@@ -28,13 +28,15 @@ jobs:
           echo "OddsFeed Client Platform API : $ODDSFEED_CLIENT_PLATFORM_API"
       - name: OddsFeed
         if: always()
-        run: bundle exec rake external:oddsfeed
+        run: bundle exec rake oddsfeed
         env:
+          SLACK_API_TOKEN: ${{ secrets.SLACK_API_TOKEN }}
           ODDSFEED_API_KEY: ${{ secrets.ODDSFEED_API_KEY }}
       - name: Platform API
         if: always()
-        run: bundle exec rake external:platform
+        run: bundle exec rake platform
         env:
+          SLACK_API_TOKEN: ${{ secrets.SLACK_API_TOKEN }}
           PLATFORM_API_INTERNAL_KEY: ${{ secrets.PLATFORM_API_INTERNAL_KEY }}
           PLATFORM_API_KEY: ${{ secrets.PLATFORM_API_KEY }}
       - name: Publish Test Report

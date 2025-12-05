@@ -9,7 +9,7 @@ Feature: Betting API
     When I send a POST request to "/v1/sportsbook/livestream" with the following:
     """
     {
-      "ProviderFixtureId": "100001",
+      "ProviderFixtureId": "13270521",
       "IPAddress": "127.0.0.1",
       "IPCountryCode": "US",
       "IsMobile": false
@@ -115,7 +115,8 @@ Feature: Betting API
     And the JSON response should have "$.message" with the text "Success"
 
   @failing
-  Scenario: Active Fixtures
+  @current
+  Scenario: Active Fixtures Prematch / No Date Filter
     When I send and accept JSON
     When I send a POST request to "/v1/sportsbook/activefixtures" with the following:
     """
@@ -125,7 +126,7 @@ Feature: Betting API
       "LanguageCode": 1,
       "IPCountryCode": "PH",
       "ParticipantName": "unset",
-      "FixtureStatus": "live"
+      "FixtureStatus": "prematch"
     }
     """
     Then show me the response
