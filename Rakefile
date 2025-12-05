@@ -52,7 +52,7 @@ Cucumber::Rake::Task.new(:current) do |t|
 end
 
 task :platform => [:clean, :prepare, 'external:platform'] do |t|
-  if ENV['CI'] then
+  if !ENV['CI'] then
     puts "Skipping report submission"
     exit
   end
@@ -62,7 +62,7 @@ task :platform => [:clean, :prepare, 'external:platform'] do |t|
 end
 
 task :oddsfeed => [:clean, :prepare, 'external:oddsfeed'] do |t|
-  if ENV['CI'] then
+  if !ENV['CI'] then
     puts "Skipping report submission"
     exit
   end
