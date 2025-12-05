@@ -37,3 +37,11 @@ end
 After do
   ENV['SERVICE_URL']  = ""
 end
+
+Before('@require_operator_token') do
+  # login
+end
+
+After('@require_operator_token') do
+  # lgout
+end

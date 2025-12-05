@@ -79,7 +79,9 @@ Feature: Betting API - Betting
     """
     {
       "ClientId": "F5251362-64F1-4BF4-28E9-08D8EE99CA8E",
-      "CurrencyCode": "EUR"
+      "CurrencyCode": "EUR",
+      "ExchangeRate": 1.00,
+      "CompanyShare": 0.09
     }
     """
     Then the response status should be "200"
@@ -185,7 +187,6 @@ Feature: Betting API - Betting
     And the JSON response should have "$.statusCode" with the text "141"
     And the JSON response should have "$.message" with the text "CashOut Is Unavailable"
 
-
   Scenario: Bet Status - Non Guid
     When I send and accept JSON
     When I send a POST request to "/v1/bet/status" with the following:
@@ -196,7 +197,9 @@ Feature: Betting API - Betting
     """
     Then the response status should be "400"
     And the JSON response should have "$.status" with the text "400"
+    And the JSON response should have "$.title" with the text "One or more validation errors occurred."
 
+    @current
   # because bet is not found :D
   Scenario: Bet Status - Guid
     When I send and accept JSON
@@ -206,6 +209,7 @@ Feature: Betting API - Betting
       "BetId": "dd5944ce-8b75-4380-9ffd-e10d8e55be33"
     }
     """
+    Then show me the response
     Then the response status should be "400"
     And the JSON response should have "$.message" with the text "Object reference not set to an instance of an object."
 
@@ -221,6 +225,8 @@ Feature: Betting API - Betting
     Then the response status should be "200"
 
   @current
+  @failing
+  # Requires the GetTopMarketBets Stored Proc
   Scenario: Bet Recommendation
     When I send and accept JSON
     And I send a POST request to "/v1/bet/recommendations" with the following:

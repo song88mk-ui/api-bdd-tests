@@ -194,6 +194,7 @@ Feature: Betting API
     Then the response status should be "200"
     And the JSON response should have "$.message" with the text "Success"
 
+  @current
   Scenario: Bet Recommendations
     When I send and accept JSON
     When I send a POST request to "/v2/sportsbook/betrecommendations" with the following:
@@ -201,7 +202,6 @@ Feature: Betting API
     {
       "ClientId": "F5251362-64F1-4BF4-28E9-08D8EE99CA8E",
       "ClientCode": "G01",
-      "CurrencyCode": "EUR",
       "LanguageCode": 1,
       "Markets": []
     }
