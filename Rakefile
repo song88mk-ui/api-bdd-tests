@@ -58,7 +58,7 @@ task :platform => [:clean, :prepare, 'external:platform'] do |t|
   end
 
   require_relative 'utils/report'
-  Report.submit("Platform API - Public Endpoints", "results/index.html")
+  Report.submit("Platform API - Public Endpoints", "results/index.html", "C0A1QRRDSF7")
 end
 
 task :oddsfeed => [:clean, :prepare, 'external:oddsfeed'] do |t|
@@ -68,5 +68,5 @@ task :oddsfeed => [:clean, :prepare, 'external:oddsfeed'] do |t|
   end
 
   require_relative 'utils/report'
-  Report.submit("OddsFeed API", "results/index.html")
+  Report.submit("OddsFeed API", "results/index.html", "C0A1QRRDSF7")
 end
