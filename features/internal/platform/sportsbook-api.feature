@@ -194,7 +194,6 @@ Feature: Betting API
     Then the response status should be "200"
     And the JSON response should have "$.message" with the text "Success"
 
-  @current
   Scenario: Bet Recommendations
     When I send and accept JSON
     When I send a POST request to "/v2/sportsbook/betrecommendations" with the following:
@@ -210,9 +209,7 @@ Feature: Betting API
     And the JSON response should have "$.message" with the text "Success"
 
 
-  @current
-  @failing
-  Scenario: Get Sports (all)
+  Scenario: Get Sports - Early / Sports
     When I send and accept JSON
     When I send a POST request to "/v2/sportsbook/sports" with the following:
     """
@@ -220,11 +217,30 @@ Feature: Betting API
       "ClientId": "F5251362-64F1-4BF4-28E9-08D8EE99CA8E",
       "LanguageCode": 1,
       "ClientCode": "G01",
-      "SportGroup": 0,
-      "MinuteUTCOffset": 300
+      "SportGroup": 1,
+      "FixtureScope": -1,
+      "DateUTC": "2025-12-05T12:57:49+00:00",
+      "MinuteUTCOffset": 0
     }
     """
     Then show me the response
+    Then the response status should be "200"
+    And the JSON response should have "$.message" with the text "Success"
+
+  Scenario: Get Sports - Today / Sports
+    When I send and accept JSON
+    When I send a POST request to "/v2/sportsbook/sports" with the following:
+    """
+    {
+      "ClientId": "F5251362-64F1-4BF4-28E9-08D8EE99CA8E",
+      "LanguageCode": 1,
+      "ClientCode": "G01",
+      "SportGroup": 1,
+      "FixtureScope": 0,
+      "DateUTC": "2025-12-05T12:57:49+00:00",
+      "MinuteUTCOffset": 0
+    }
+    """
     Then the response status should be "200"
     And the JSON response should have "$.message" with the text "Success"
 
