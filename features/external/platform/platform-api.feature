@@ -1,6 +1,6 @@
 @external
 @platformapi
-@hello
+@authentication
 Feature: Platform Integration API
   As DevOps
   I want to make sure all the endpoints are working
