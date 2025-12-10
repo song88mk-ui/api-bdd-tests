@@ -5,31 +5,9 @@ Feature: Platform Integration API - Sportsbook
   As DevOps
   I want to make sure all the endpoints are working
 
-  @current
-  Scenario: Obtain an Operator Token
-    Given I have platform API Key
-    When I set headers:
-      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-    When I send and accept JSON
-    When I send a POST request to "/v1/authentication/login" with the following:
-    """
-      {
-        "UserName" : "test",
-        "Password" : "test"
-      }
-    """
-    Then I will have an operator token
-    Then the response status should be "200"
-    And the JSON response should have "$.statusCode" with the text "100"
-    And the JSON response should have "$.message" with the text "Success"
-
   #todo: add fixture id to test
+  @requires_operator_token
   Scenario: Livestream
-    Given I have platform API Key
-    When I add the operator token
-    When I set headers:
-      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-    When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/livestream" with the following:
     #Examples
       | providerFixtureId | bg:match:12345 |
@@ -38,12 +16,8 @@ Feature: Platform Integration API - Sportsbook
     Then show me the response
     Then the response status should be "400"
 
+  @requires_operator_token
   Scenario: Top Leagues (All)
-    Given I have platform API Key
-    When I add the operator token
-    When I set headers:
-      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-    When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/sports/topleagues" with the following:
     #Examples
       | sportId            | 0   |
@@ -53,12 +27,8 @@ Feature: Platform Integration API - Sportsbook
     And the JSON response should have "$.statusCode" with the text "100"
     And the JSON response should have "$.message" with the text "Success"
 
+  @requires_operator_token
   Scenario: Top Leagues (Prematch)
-    Given I have platform API Key
-    When I add the operator token
-    When I set headers:
-      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-    When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/sports/topleagues" with the following:
     #Examples
       | sportId            | 0   |
@@ -68,12 +38,8 @@ Feature: Platform Integration API - Sportsbook
     And the JSON response should have "$.statusCode" with the text "100"
     And the JSON response should have "$.message" with the text "Success"
 
+  @requires_operator_token
   Scenario: Top Leagues (Live)
-    Given I have platform API Key
-    When I add the operator token
-    When I set headers:
-      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-    When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/sports/topleagues" with the following:
     #Examples
       | sportId            | 0   |
@@ -83,12 +49,8 @@ Feature: Platform Integration API - Sportsbook
     And the JSON response should have "$.statusCode" with the text "100"
     And the JSON response should have "$.message" with the text "Success"
 
+  @requires_operator_token
   Scenario: All Leagues
-    Given I have platform API Key
-    When I add the operator token
-    When I set headers:
-      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-    When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/sports/allleagues" with the following:
     #Examples
       | sportId            | 0   |
@@ -98,130 +60,84 @@ Feature: Platform Integration API - Sportsbook
     And the JSON response should have "$.statusCode" with the text "100"
     And the JSON response should have "$.message" with the text "Success"
 
+  @requires_operator_token
   Scenario: Top Fixtures FixtureId
-    Given I have platform API Key
-    When I add the operator token
-    When I set headers:
-      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-    When I send and accept JSON
     When I send a GET request to "/v2/sportsbook/topfixtures/fixtureId"
     Then the response status should be "200"
     And the JSON response should have "$.statusCode" with the text "100"
     And the JSON response should have "$.message" with the text "Success"
 
+  @requires_operator_token
   Scenario: Market Template Groups
-    Given I have platform API Key
-    When I add the operator token
-    When I set headers:
-      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-    When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/markettemplategroups"
     Then the response status should be "200"
     And the JSON response should have "$.statusCode" with the text "100"
     And the JSON response should have "$.message" with the text "Success"
 
+  @requires_operator_token
   Scenario: Selector Market Template
-    Given I have platform API Key
-    When I add the operator token
-    When I set headers:
-      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-    When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/selectormarkettemplates"
     Then the response status should be "200"
     And the JSON response should have "$.statusCode" with the text "100"
     And the JSON response should have "$.message" with the text "Success"
 
+  @requires_operator_token
   Scenario: Market Sort Order
-    Given I have platform API Key
-    When I add the operator token
-    When I set headers:
-      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-    When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/marketsortorder"
     Then the response status should be "200"
     And the JSON response should have "$.statusCode" with the text "100"
     And the JSON response should have "$.message" with the text "Success"
 
+  @requires_operator_token
   Scenario: Fixture Sort Order
-    Given I have platform API Key
-    When I add the operator token
-    When I set headers:
-      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-    When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/fixturesortorder"
     Then the response status should be "200"
     And the JSON response should have "$.statusCode" with the text "100"
     And the JSON response should have "$.message" with the text "Success"
 
+  @requires_operator_token
   Scenario: User Favorites
-    Given I have platform API Key
-    When I add the operator token
-    When I set headers:
-      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-    When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/userfavorites/fixtures"
     Then the response status should be "200"
     And the JSON response should have "$.statusCode" with the text "100"
     And the JSON response should have "$.message" with the text "Success"
 
+  @requires_operator_token
   Scenario: Top Fixtures
-    Given I have platform API Key
-    When I add the operator token
-    When I set headers:
-      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-    When I send and accept JSON
     When I send a GET request to "/v2/sportsbook/topfixtures"
     Then the response status should be "200"
     And the JSON response should have "$.statusCode" with the text "100"
     And the JSON response should have "$.message" with the text "Success"
 
-  Scenario: Active Fixtures - No Parameters
-    Given I have platform API Key
-    When I add the operator token
-    When I set headers:
-      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-    When I send and accept JSON
-    When I send a GET request to "/v1/sportsbook/activefixtures"
+  @requires_operator_token
+  Scenario: Active Fixtures - Live
+    When I send a GET request to "/v1/sportsbook/activefixtures" with the following:
+      | fixtureStatus   | live |
+    Then show me the response
     Then the response status should be "200"
     And the JSON response should have "$.statusCode" with the text "100"
     And the JSON response should have "$.message" with the text "Success"
 
-  @known
-  @todo
-  # grab one record from above results (no parameters) and search it
-  # as participant name
+  @requires_operator_token
   Scenario: Active Fixtures - Prematch
-    Given I have platform API Key
-    When I add the operator token
-    When I set headers:
-      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-    When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/activefixtures" with the following:
     #Examples
-      | participantName | Moca FC |
       | fixtureStatus   | prematch |
     Then the response status should be "200"
     And the JSON response should have "$.statusCode" with the text "100"
     And the JSON response should have "$.message" with the text "Success"
 
+  @requires_operator_token
   @known
   @todo
   Scenario: Active Fixtures Details
-    Given I have platform API Key
-    When I add the operator token
-    When I set headers:
-      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-    When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/activefixtures/details" with the following:
     #Examples
       | fixtureId | 1437404267307610112 |
     Then the response status should be "200"
 
+  @requires_operator_token
   Scenario: Live Fixture Count
-    Given I have platform API Key
-    When I set headers:
-      | X-Client-Id     | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-    When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/livefixturecount" with the following:
     #Examples
       | sportGroupId | 0 |
@@ -229,11 +145,8 @@ Feature: Platform Integration API - Sportsbook
     And the JSON response should have "$.statusCode" with the text "100"
     And the JSON response should have "$.message" with the text "Success"
 
+  @requires_operator_token
   Scenario: Today Fixture Count
-    Given I have platform API Key
-    When I set headers:
-      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-    When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/todayfixturecount" with the following:
     #Examples
       | sportGroupId | 0 |
@@ -241,11 +154,18 @@ Feature: Platform Integration API - Sportsbook
     And the JSON response should have "$.statusCode" with the text "100"
     And the JSON response should have "$.message" with the text "Success"
 
+  @requires_operator_token
+  Scenario: Get Sports - As Used in Sportsbook Frontend
+    When I send a GET request to "/v1/sportsbook/sports" with the following:
+    #Examples
+      | sportGroup      | 0   |
+      | minuteUTCOffset | 480 |
+    Then the response status should be "200"
+    And the JSON response should have "$.statusCode" with the text "100"
+    And the JSON response should have "$.message" with the text "Success"
+
+  @requires_operator_token
   Scenario: Get Sports - (No Fixture Scope / Today )
-    Given I have platform API Key
-    When I set headers:
-      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-    When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/sports" with the following:
     #Examples
       | sportGroup      | 1 |
@@ -254,23 +174,27 @@ Feature: Platform Integration API - Sportsbook
     And the JSON response should have "$.statusCode" with the text "100"
     And the JSON response should have "$.message" with the text "Success"
 
-  Scenario: Get Live Fixtures
+  @requires_operator_token
+  Scenario: Get Live Fixtures (Football)
     Given I have platform API Key
-    When I set headers:
-      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-    When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/sports/livefixtures" with the following:
     #Examples
-      | sportId | 1 |
+      | sportId | 10 |
     Then the response status should be "200"
     And the JSON response should have "$.statusCode" with the text "100"
     And the JSON response should have "$.message" with the text "Success"
 
+  @requires_operator_token
+  Scenario: Get Live Fixtures (Baseball)
+    When I send a GET request to "/v1/sportsbook/sports/livefixtures" with the following:
+    #Examples
+      | sportId | 8 |
+    Then the response status should be "200"
+    And the JSON response should have "$.statusCode" with the text "100"
+    And the JSON response should have "$.message" with the text "Success"
+
+  @requires_operator_token
   Scenario: Get Live Fixtures
-    Given I have platform API Key
-    When I set headers:
-      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-    When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/sports/segments/leagues/livefixtures" with the following:
     #Examples
       | sportId   | 1 |
@@ -280,11 +204,8 @@ Feature: Platform Integration API - Sportsbook
     And the JSON response should have "$.statusCode" with the text "100"
     And the JSON response should have "$.message" with the text "Success"
 
+  @requires_operator_token
   Scenario: Get Today Fixtures
-    Given I have platform API Key
-    When I set headers:
-      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-    When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/sports/todayfixtures" with the following:
     #Examples
       | sportId         | 1   |
@@ -293,11 +214,8 @@ Feature: Platform Integration API - Sportsbook
     And the JSON response should have "$.statusCode" with the text "100"
     And the JSON response should have "$.message" with the text "Success"
 
+  @requires_operator_token
   Scenario: Get Today Fixtures By League
-    Given I have platform API Key
-    When I set headers:
-      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-    When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/sports/segments/leagues/todayfixtures" with the following:
     #Examples
       | sportId         | 1   |
@@ -307,11 +225,8 @@ Feature: Platform Integration API - Sportsbook
     And the JSON response should have "$.statusCode" with the text "100"
     And the JSON response should have "$.message" with the text "Success"
 
+  @requires_operator_token
   Scenario: Upcoming Fixtures
-    Given I have platform API Key
-    When I set headers:
-      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-    When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/sports/upcomingfixtures" with the following:
     #Examples
       | sportId         | 1   |
@@ -320,11 +235,8 @@ Feature: Platform Integration API - Sportsbook
     And the JSON response should have "$.statusCode" with the text "100"
     And the JSON response should have "$.message" with the text "Success"
 
+  @requires_operator_token
   Scenario: Upcoming Fixtures By League
-    Given I have platform API Key
-    When I set headers:
-      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-    When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/sports/segments/leagues/upcomingfixtures" with the following:
     #Examples
       | sportId         | 1   |
@@ -335,69 +247,50 @@ Feature: Platform Integration API - Sportsbook
     And the JSON response should have "$.statusCode" with the text "100"
     And the JSON response should have "$.message" with the text "Success"
 
+  @requires_operator_token
   Scenario: Daily Fixtures
-    Given I have platform API Key
-    When I set headers:
-      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-    When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/sports/dailyfixtures" with the following:
     #Examples
       | sportId         | 1          |
       | dateUTC         | 2025-12-04 |
       | minuteUTCOffset | 300        |
-    Then show me the response
     Then the response status should be "200"
     And the JSON response should have "$.statusCode" with the text "100"
     And the JSON response should have "$.message" with the text "Success"
 
   # Most endpoints are True Wave Endpoints :P
+  @requires_operator_token
   Scenario: Announcements
-    Given I have platform API Key
-    When I set headers:
-      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-    When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/announcements"
     Then the response status should be "200"
     And the JSON response should have "$.statusCode" with the text "100"
     And the JSON response should have "$.message" with the text "Success"
 
+  @requires_operator_token
   Scenario: CCF
-    Given I have platform API Key
-    When I set headers:
-      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-    When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/ccf" with the following:
     #Examples:
       | userId | 3546c6d2-a83b-47c5-8a37-c1e2111543b5 |
     Then show me the response
     Then the response status should be "200"
 
+  @requires_operator_token
   Scenario: Boosted Odds
-    Given I have platform API Key
-    When I set headers:
-      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-    When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/boostedfixtures"
     Then the response status should be "200"
     And the JSON response should have "$.statusCode" with the text "100"
     And the JSON response should have "$.message" with the text "Success"
 
+  @requires_operator_token
   Scenario: Translations
-    Given I have platform API Key
-    When I set headers:
-      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-    When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/translations"
     Then the response status should be "200"
     And the JSON response should have "$.statusCode" with the text "100"
     And the JSON response should have "$.message" with the text "Success"
 
   # sb bet recommendation
+  @requires_operator_token
   Scenario: Bet Recommendations Unsupported Currency
-    Given I have platform API Key
-    When I set headers:
-      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-    When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/betrecommendations" with the following:
     #Examples:
       | currencyCode | NA |
@@ -405,29 +298,13 @@ Feature: Platform Integration API - Sportsbook
     And the JSON response should have "$.statusCode" with the text "105"
     And the JSON response should have "$.message" with the text "Unsupported CurrencyCode"
 
+  @requires_operator_token
   @failing
   @current
   @known
   Scenario: Bet Recommendations
-    Given I have platform API Key
-    When I add the operator token
-    When I set headers:
-      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-    When I send and accept JSON
     When I send a GET request to "/v1/sportsbook/betrecommendations" with the following:
     #Examples:
       | currencyCode | EUR |
     Then show me the response
     Then the response status should be "200"
-
-  @current
-  Scenario: Logout the Operator Token
-    Given I have platform API Key
-    When I add the operator token
-    When I set headers:
-      | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-    When I send and accept JSON
-    When I send a POST request to "/v1/authentication/logout"
-    Then the response status should be "200"
-    And the JSON response should have "$.statusCode" with the text "100"
-    And the JSON response should have "$.message" with the text "Success"

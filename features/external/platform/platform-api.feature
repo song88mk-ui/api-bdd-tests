@@ -27,7 +27,6 @@ Feature: Platform Integration API
     When I add the operator token
     When I set headers:
       | X-Client-Id | F5251362-64F1-4BF4-28E9-08D8EE99CA8E |
-    When I send and accept JSON
     When I send a POST request to "/v1/authentication/logout"
     Then the response status should be "200"
     And the JSON response should have "$.statusCode" with the text "100"

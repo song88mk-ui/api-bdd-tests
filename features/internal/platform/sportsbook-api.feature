@@ -116,7 +116,7 @@ Feature: Betting API
 
   @failing
   @current
-  Scenario: Active Fixtures Prematch / No Date Filter
+  Scenario: Active Fixtures - Live / No Date Filter
     When I send and accept JSON
     When I send a POST request to "/v1/sportsbook/activefixtures" with the following:
     """
@@ -125,11 +125,26 @@ Feature: Betting API
       "ClientCode": "G01",
       "LanguageCode": 1,
       "IPCountryCode": "PH",
-      "ParticipantName": "unset",
+      "ParticipantName": "",
+      "FixtureStatus": "live"
+    }
+    """
+    Then the response status should be "200"
+
+  @current
+  Scenario: Active Fixtures - Prematch / No Date Filter
+    When I send and accept JSON
+    When I send a POST request to "/v1/sportsbook/activefixtures" with the following:
+    """
+    {
+      "ClientId": "F5251362-64F1-4BF4-28E9-08D8EE99CA8E",
+      "ClientCode": "G01",
+      "LanguageCode": 1,
+      "IPCountryCode": "PH",
+      "ParticipantName": "",
       "FixtureStatus": "prematch"
     }
     """
-    Then show me the response
     Then the response status should be "200"
 
   @failing

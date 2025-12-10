@@ -3,7 +3,7 @@ require 'dotenv/load'
 
 
 class Report
-  def self.submit(report_name, file_name, channel_id = "C0A276YQB1P")
+  def self.submit(report_name, file_name, channel_id = "C0A276YQB1P", env="dev")
     puts "Submitting results to Slack!"
 
     if !ENV['SLACK_API_TOKEN']
@@ -25,7 +25,7 @@ class Report
     begin
       client.chat_postMessage(
         channel: channel_id,
-        text: "Here is the latest result on *#{report_name}* - Cucumber Tests!",
+        text: "Here is the latest result on *#{report_name}* on `#{env}` - Cucumber Tests!",
         as_user: true)
 
       client.chat_postMessage(
