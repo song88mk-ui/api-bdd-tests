@@ -54,7 +54,8 @@ Before('@requires_operator_token') do
   request_opts[:input] = input
 
   request "/v1/authentication/login", request_opts
-  expect(last_response.status).to eq(200)
+  expect(last_response.status).to eq(200),
+    "Unable to login: #{last_response.status} #{last_response.body}"
 
   response = JSON.parse(last_response.body)
   results = JsonPath.new("$.statusCode").on(response).to_a.map(&:to_s)
@@ -67,6 +68,9 @@ Before('@requires_operator_token') do
 end
 
 After('@requires_operator_token') do
+  if @operator_token.nil?
+    return
+  end
   header 'x-api-key', ENV['PLATFORM_API_KEY']
   header 'x-client-id', ENV['TEST_CLIENT_ID']
   header 'x-operator-token', @operator_token

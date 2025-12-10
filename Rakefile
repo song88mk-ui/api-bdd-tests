@@ -39,7 +39,7 @@ namespace :external do
   end
   Cucumber::Rake::Task.new(:platform) do |t|
     t.profile = ['default', 'ci', 'html', 'skip_known']
-    t.cucumber_opts = %w{--tags @external --tags @platformapi}
+    t.cucumber_opts = %w{--tags @external --tags @platformapi --tags @current}
   end
 
   desc "Run all features with CI profile"
