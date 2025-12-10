@@ -39,8 +39,8 @@ jobs:
           SLACK_API_TOKEN: ${{ secrets.SLACK_API_TOKEN }}
           PLATFORM_API_INTERNAL_KEY: ${{ secrets.PLATFORM_API_INTERNAL_KEY }}
           PLATFORM_API_KEY: ${{ secrets.PLATFORM_API_KEY }}
-      - name: Publish Test Report
-        uses: mikepenz/action-junit-report@v5
-        if: success() || failure()
-        with:
-          report_paths: 'results/junit/TEST-*.xml'
+      #- name: Publish Test Report
+        #uses: mikepenz/action-junit-report@v5
+        #if: success() || failure()
+        #with:
+          #report_paths: 'results/junit/TEST-*.xml'
