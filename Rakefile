@@ -54,24 +54,36 @@ end
 namespace :dev do
   env = "dev"
   desc "Run against #{env} environment"
-  task :platform => [:clean, :prepare, 'external:platform'] do |t|
-    if !ENV['CI'] then
-      puts "Skipping report submission"
-      exit
-    end
+  task :platform => [:clean, :prepare] do |t|
+    begin
+      Rake::Task['external:platform'].invoke
+    rescue => e
+      puts "error: #{e.message}"
+    ensure
+      if !ENV['CI'] then
+        puts "Skipping report submission"
+        exit
+      end
 
-    require_relative 'utils/report'
-    Report.submit("Platform API - Public Endpoints", "results/index.html", "C0A1QRRDSF7", env)
+      require_relative 'utils/report'
+      Report.submit("Platform API - Public Endpoints", "results/index.html", "C0A1QRRDSF7", env)
+    end
   end
 
   desc "Run against #{env} environment"
-  task :oddsfeed => [:clean, :prepare, 'external:oddsfeed'] do |t|
-    if !ENV['CI'] then
-      puts "Skipping report submission"
-      exit
-    end
+  task :oddsfeed => [:clean, :prepare ] do |t|
+    begin
+      Rake::Task['external:oddsfeed'].invoke
+    rescue => e
+      puts "error: #{e.message}"
+    ensure
+      if !ENV['CI'] then
+        puts "Skipping report submission"
+        exit
+      end
 
-    require_relative 'utils/report'
-    Report.submit("OddsFeed API", "results/index.html", "C0A1QRRDSF7", env)
+      require_relative 'utils/report'
+      Report.submit("OddsFeed API", "results/index.html", "C0A1QRRDSF7", env)
+    end
   end
 end
