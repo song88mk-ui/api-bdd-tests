@@ -6,7 +6,6 @@ Feature: Platform Integration API - Betting
   I want to make sure all the endpoints are working
 
   @requires_operator_token
-  @current
   Scenario: Get Balance
     When I send a GET request to "/v1/wallet/balance"
     Then show me the response
