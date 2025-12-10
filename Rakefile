@@ -67,6 +67,7 @@ namespace :dev do
 
       require_relative 'utils/report'
       Report.submit("Platform API - Public Endpoints", "results/index.html", "C0A1QRRDSF7", env)
+      exit 0
     end
   end
 
@@ -84,6 +85,7 @@ namespace :dev do
 
       require_relative 'utils/report'
       Report.submit("OddsFeed API", "results/index.html", "C0A1QRRDSF7", env)
+      exit 0
     end
   end
 end
