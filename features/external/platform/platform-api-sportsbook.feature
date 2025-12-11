@@ -13,7 +13,6 @@ Feature: Platform Integration API - Sportsbook
       | providerFixtureId | bg:match:12345 |
       | ipAddress         | 1.2.3.4        |
       | isMobile          | true           |
-    Then show me the response
     Then the response status should be "400"
 
   @requires_operator_token
@@ -113,7 +112,6 @@ Feature: Platform Integration API - Sportsbook
   Scenario: Active Fixtures - Live
     When I send a GET request to "/v1/sportsbook/activefixtures" with the following:
       | fixtureStatus   | live |
-    Then show me the response
     Then the response status should be "200"
     And the JSON response should have "$.statusCode" with the text "100"
     And the JSON response should have "$.message" with the text "Success"
@@ -189,6 +187,25 @@ Feature: Platform Integration API - Sportsbook
     When I send a GET request to "/v1/sportsbook/sports/livefixtures" with the following:
     #Examples
       | sportId | 8 |
+    Then the response status should be "200"
+    And the JSON response should have "$.statusCode" with the text "100"
+    And the JSON response should have "$.message" with the text "Success"
+
+  @requires_operator_token
+  Scenario: Get Live Fixtures (Basketball)
+    When I send a GET request to "/v1/sportsbook/sports/livefixtures" with the following:
+    #Examples
+      | sportId | 4 |
+    Then the response status should be "200"
+    And the JSON response should have "$.statusCode" with the text "100"
+    And the JSON response should have "$.message" with the text "Success"
+
+  @requires_operator_token
+  Scenario: Get Segment Fixtures
+    When I send a GET request to "/v1/sportsbook/sports/segments/fixtures" with the following:
+    #Examples
+      | sportId   | 4   |
+      | segmentId | 140 |
     Then the response status should be "200"
     And the JSON response should have "$.statusCode" with the text "100"
     And the JSON response should have "$.message" with the text "Success"
@@ -271,7 +288,6 @@ Feature: Platform Integration API - Sportsbook
     When I send a GET request to "/v1/sportsbook/ccf" with the following:
     #Examples:
       | userId | 3546c6d2-a83b-47c5-8a37-c1e2111543b5 |
-    Then show me the response
     Then the response status should be "200"
 
   @requires_operator_token
@@ -306,5 +322,4 @@ Feature: Platform Integration API - Sportsbook
     When I send a GET request to "/v1/sportsbook/betrecommendations" with the following:
     #Examples:
       | currencyCode | EUR |
-    Then show me the response
     Then the response status should be "200"
