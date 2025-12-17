@@ -1,10 +1,18 @@
 Then('I will have an operator token') do
-  if last_response.headers['Content-Type'] =~ /json/
-    json = JSON.parse(last_response.body)
-    $tmp_operator_token = json['result']['operatorToken']
-  else
-    puts "cannot obtain the operator token from response"
+  unless last_response.headers['Content-Type'] =~ /json/
+    raise "Content-Type is not application/json"
   end
+
+  json = JSON.parse(last_response.body)
+  unless json['result']
+    raise "Response did not contain a valid JSON with result property"
+  end
+
+  unless json['result']['operatorToken']
+    raise "No Operator Token Found"
+  end
+
+  $tmp_operator_token = json['result']['operatorToken']
 end
 
 When('I add the operator token') do
